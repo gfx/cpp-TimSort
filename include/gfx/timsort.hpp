@@ -77,15 +77,6 @@ namespace gfx {
 
 namespace detail {
 
-// Equivalent to C++20 std::identity
-struct identity {
-    template <typename T>
-    constexpr T&& operator()(T&& value) const noexcept
-    {
-        return std::forward<T>(value);
-    }
-};
-
 // Merge a predicate and a projection function
 template <typename Compare, typename Projection>
 struct projection_compare {
@@ -726,7 +717,7 @@ void timmerge(RandomAccessIterator first, RandomAccessIterator middle,
 template <typename RandomAccessIterator, typename Compare>
 void timmerge(RandomAccessIterator first, RandomAccessIterator middle,
               RandomAccessIterator last, Compare compare) {
-    gfx::timmerge(first, middle, last, compare, detail::identity());
+    gfx::timmerge(first, middle, last, compare, std::identity{});
 }
 
 /**
@@ -736,7 +727,7 @@ template <typename RandomAccessIterator>
 void timmerge(RandomAccessIterator first, RandomAccessIterator middle,
               RandomAccessIterator last) {
     typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
-    gfx::timmerge(first, middle, last, std::less<value_type>(), detail::identity());
+    gfx::timmerge(first, middle, last, std::less<value_type>(), std::identity{});
 }
 
 /**
@@ -756,7 +747,7 @@ void timsort(RandomAccessIterator const first, RandomAccessIterator const last,
  */
 template <typename RandomAccessIterator, typename Compare>
 void timsort(RandomAccessIterator const first, RandomAccessIterator const last, Compare compare) {
-    gfx::timsort(first, last, compare, detail::identity());
+    gfx::timsort(first, last, compare, std::identity{});
 }
 
 /**
@@ -765,7 +756,7 @@ void timsort(RandomAccessIterator const first, RandomAccessIterator const last, 
 template <typename RandomAccessIterator>
 void timsort(RandomAccessIterator const first, RandomAccessIterator const last) {
     typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
-    gfx::timsort(first, last, std::less<value_type>(), detail::identity());
+    gfx::timsort(first, last, std::less<value_type>(), std::identity{});
 }
 
 /**
