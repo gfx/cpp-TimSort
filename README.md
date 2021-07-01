@@ -18,9 +18,7 @@ can't fallback to a O(n log² n) algorithm when there isn't enough extra heap me
 
 `gfx::timsort` also has a few additional features and guarantees compared to `std::stable_sort`:
 * It can take a [projection function](https://ezoeryou.github.io/blog/article/2019-01-22-ranges-projection.html)
-  after the comparison function. The support is a bit rougher than in the linked article or the C++20 standard library:
-  unless `std::invoke` is available, only instances of types callable with parentheses can be used, there is no support
-  for pointer to members.
+  after the comparison function.
 * It can also be passed a range instead of a pair of iterators, in which case it will sort the whole range.
 * This implementation of timsort notably avoids using the postfix `++` or `--` operators: only their prefix equivalents
   are used, which means that timsort will work even if the postfix operators are not present or return an incompatible
